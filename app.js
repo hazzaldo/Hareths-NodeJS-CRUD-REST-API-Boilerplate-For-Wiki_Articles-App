@@ -83,9 +83,9 @@ app.route('/articles/:articleTitle')
     }  
 });
 
-//////// THIS IS THE METHOD I'M HAVING THE ISSUE ON ////////////
+//////// DELETING ARTICLE BY ID ////////////
 
-app.delete('/articles/:id', async (req, res) => {
+app.delete('/articles/article/:id', async (req, res) => {
     const articleID = req.params.id;
     console.log(`articleID: ${articleID}`);
     try {
