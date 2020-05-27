@@ -44,7 +44,8 @@ Server connected successfully to MongoDB
 The base URL: `http://localhost:3000/` . 
 
 ## Swagger
-Visit `http://localhost:3000/api-docs` to view the the OPENAPI document in Swagger-UI
+>Visit `http://localhost:3000/api-docs` to view the the OPENAPI document in Swagger-UI
+
 <img src=images/swagger-doc.JPG>
 
 ## Usage
