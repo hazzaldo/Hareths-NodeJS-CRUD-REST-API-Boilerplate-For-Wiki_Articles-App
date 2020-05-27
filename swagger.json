@@ -1,0 +1,409 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Hareth-Express-NodeJS-CRUD-REST-API-For-Sample-Wiki-Articles-app",
+        "description": "A minimal and easy to follow example of what you need to create a CRUD style API in NodeJs (Express) for a Wiki Articles app",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "Local development"
+        },
+        {
+            "url": "/",
+            "description": "Local Dev, or from Heroku"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Wiki articles",
+            "description": "An example of APIs for a Wiki Articles app"
+        }
+    ],
+    "paths": {
+        "/articles": {
+            "get": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Returns all articles",
+                "responses": {
+                    "200": {
+                        "description": "Returns an array of all articles",
+                        "content": {
+                            "application/json": {
+                                "schema": {                     
+                                    "$ref": "#/components/schemas/Articles"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Create a new article",
+                "requestBody": {
+                    "description": "Article Object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ArticleRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Returns newly created article",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "created article {articleTitle} successfully"
+                                        } 
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Articles"
+                ],
+                "summary": "Deletes all articles",
+                "responses": {
+                    "200": {
+                        "description": "All articles are deleted from the database",
+                        "content": {
+                            "application/json": {
+                                "schema": {                     
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully deleted all articles."
+                                        }
+                                    }   
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/articles/{articleTitle}": {
+            "parameters": [
+                {
+                    "name": "articleTitle",
+                    "in": "path",
+                    "schema":{
+                        "type": "string"
+                    },
+                    "required": true,
+                    "description": "Title of the article that we want to match"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Articles/{ArticleTitle}"
+                ],
+                "summary": "Get article, given the article's title",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "articleTitle",
+                        "required": true,
+                        "description": "The article's title",
+                        "schema": {
+                            "$ref": "#/components/schemas/ArticleTitle"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns the article, with the given article title",
+                        "content": {
+                            "application/json": {
+                                "schema": {                     
+                                    "$ref": "#/components/schemas/ArticleResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Article not found."
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update/overwrite an article, given the article's title, and supplying the title and content to update the article with (in the HTTP request body)",
+                "tags": [
+                    "Articles/{ArticleTitle}"
+                ],
+                "requestBody": {
+                    "description": "Article Object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ArticleRequest"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "articleTitle",
+                        "required": true,
+                        "description": "The article's title",
+                        "schema": {
+                            "$ref": "#/components/schemas/ArticleTitle"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns the updated/overwritten article",
+                        "content": {
+                            "application/json": {
+                                "schema": { 
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully overwritten article"
+                                        } 
+                                    }                    
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    },
+                    "404": {
+                        "description": "Failed. Article not found."
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Update a part of an article, given the article's title, and supplying the title and/or content to update the article with (in the HTTP request body)",
+                "tags": [
+                    "Articles/{ArticleTitle}"
+                ],
+                "requestBody": {
+                    "description": "Article Object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ArticleRequest"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "articleTitle",
+                        "required": true,
+                        "description": "The article's title",
+                        "schema": {
+                            "$ref": "#/components/schemas/ArticleTitle"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Returns the updated article",
+                        "content": {
+                            "application/json": {
+                                "schema": { 
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Successfully modified article"
+                                        },
+                                        "updatedArticle": {
+                                            "type": "object",
+                                            "$ref": "#/components/schemas/ArticleResponse"
+                                        } 
+                                    }                    
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    },
+                    "404": {
+                        "description": "Failed. Article not found."
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete an article, given the article's title",
+                "tags": [
+                    "Articles/{ArticleTitle}"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "articleTitle",
+                        "required": true,
+                        "description": "The article's title",
+                        "schema": {
+                            "$ref": "#/components/schemas/ArticleTitle"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A message confirming article's deletion, with the given article title",
+                        "content": {
+                            "application/json": {
+                                "schema": { 
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Deleted article {articleTitle} successfully"
+                                        } 
+                                    }                    
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Article not found."
+                    }
+                }
+            }
+        },
+        "/articles/article/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "schema":{
+                        "type": "string"
+                    },
+                    "required": true,
+                    "description": "ID of the article that we want to match"
+                }
+            ],
+            "delete": {
+                "summary": "Delete an article, given the article's ID",
+                "tags": [
+                    "Articles/Article/{id}"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "The article's ID",
+                        "schema": {
+                            "$ref": "#/components/schemas/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A message confirming article's deletion, with the given article's ID",
+                        "content": {
+                            "application/json": {
+                                "schema": { 
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Deleted article {articleID} successfully"
+                                        } 
+                                    }                    
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Article not found."
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas":{
+            "id": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ArticleTitle": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ArticleRequest": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ArticleResponse": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Articles": {
+                "properties": {
+                    "allArticles": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ArticleResponse"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
