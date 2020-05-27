@@ -1,0 +1,23 @@
+GET http://localhost:3000/articles
+
+### Create an article
+POST http://localhost:3000/articles
+
+### Delete all articles
+DELETE http://localhost:3000/articles
+
+### Get an article by title
+GET http://localhost:3000/articles/articleTitle
+
+
+### Update overwrite an existing article by title
+PUT http://localhost:3000/articles/articleTitle
+
+### Update only part of an existing article by title
+PATCH http://localhost:3000/articles/articleTitle
+
+### Delete an article by title
+DELETE http://localhost:3000/articles/articleTitle
+
+### Delete an article by id
+DELETE http://localhost:3000/articles/article/id
