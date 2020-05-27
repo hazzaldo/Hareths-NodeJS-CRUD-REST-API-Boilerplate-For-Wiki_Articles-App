@@ -104,11 +104,26 @@ app.delete('/articles/article/:id', async (req, res) => {
     }
 });
 
-app.get("*", (req, res) =>
-  res
-    .status(404)
-    .json({ error: 'Route does not exist'})
-);
+//////////////////////////////////////// ERROR HANDLING /////////////////////////////////////////////////
+
+// Handle any other undefined route as a 404 with custom error message
+app.use((req, res, next) => {
+    const err = new Error("Failed. Article not found");
+    err.status = 404;
+    next(err);
+});
+  
+// Error Handler: pass error(s) object(s) for express to handle here from any other request, using 'next(err)'. Here we either output the error caught, if status is not set on error then set error status to 500
+app.use((err, req, res, next) => {
+    res.status(err.status || 500)
+    res.send({
+        error: {
+            status: err.status || 500,
+            // send the error message to the client
+            message: err.message
+        }
+    })
+});
 
 const port = 3000;
 app.listen(port, () => {
