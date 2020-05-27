@@ -50,27 +50,27 @@ The base URL: `http://localhost:3000/` .
 
 ## Usage
 
->#### List all articles
+#### List all articles
 <img src=images/GET_articles.JPG>
 
->#### POST (Create) Article
+#### POST (Create) Article
 <img src=images/POST_articles.JPG>
 
 > Article created in MongoDB database
 
 <img src=images/POST_articles_added_article_to_DB.JPG>
 
->#### GET by Article Title
+#### GET by Article Title
 <img src=images/GET_articles_{articleTitle}.JPG>
 
->#### PUT (update/replace) Article by Article Title
+#### PUT (update/replace) Article by Article Title
 <img src=images/PUT_articles_{articleTitle}.JPG>
 
 >Article updated/replaced in MongoDB database
 
 <img src=images/PUT_articles_replaced_article_in_DB.JPG>
 
->#### PATCH (update) Article by Article Title
+#### PATCH (update) Article by Article Title
 <img src=images/PATCH_articles_{articleTitle}.JPG>
 
 >Article in MongoDB database, before making PATCH request
@@ -81,17 +81,17 @@ The base URL: `http://localhost:3000/` .
 
 <img src=images/PATCH_articles_after_update_article_title_in_DB.JPG>
 
->#### DELETE Article by Article Title
+#### DELETE Article by Article Title
 <img src=images/DELETE_articles_{articleTitle}.JPG>
 
->#### DELETE Article by Article ID
+#### DELETE Article by Article ID
 <img src=images/DELETE_articles_article_{id}.JPG>
 
 >Existing article in MongoDB, to be deleted by ID
 
 <img src=images/DELETE_articles_before_by_article_ID.JPG>
 
->#### DELETE all Articles
+#### DELETE all Articles
 <img src=images/DELETE_articles.JPG>
 
 #### Wiki Articles JSON file
