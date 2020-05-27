@@ -2,24 +2,31 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const model = require('./model');
 const mongoose = require('mongoose');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 const app = express();
-
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// get swaggerUI to server the swaggerDocs we generated from the swaggerOptions we specified
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { explorer: true }));
+
+////////////////////////////////// ROUTES /////////////////////////////////////////////////////////
+
 app.get('/', (req, res) => {
-    res.send(`<L1> Welcome to Wiki Home page </L1>`);
+    res.status(200).send(`<L1> Welcome to Wiki Home page. Please visit the '/api-docs' url path to review the API doc.</L1>`);
 });
 
 /////////////////////////////////Handling routes for all articles//////////////////////////////////
 
 app.route('/articles')
 .get((req, res) => {
-    model.DBUtility.findAllArticles((error, allArticles) => {
-        if (!error) {
-            res.json({message: allArticles});
+    model.DBUtility.findAllArticles((err, allArticles) => {
+        if (!err) {
+            res.status(200).json({allArticles});
         } else {
-            res.json({message: error});
+            res.json({error: err});
         } 
     });
 })
@@ -28,17 +35,17 @@ app.route('/articles')
     const content = req.body.content;
     try {
         const createdArticle = await model.DBUtility.createNewArticleInDB(title, content);
-        res.status(200).json({message: 'created article ' + createdArticle.title + ' successfully', app: 'wiki-api'});
+        res.status(200).json({message: 'created article ' + createdArticle.title + ' successfully'});
     } catch (err) {
-        res.json({message: err});
+        res.json({error: err});
     } 
 })
 .delete(async (req, res) => {
     try {
         const response = await model.DBUtility.deleteAllArticlesFromDB();
-        res.json({message: response});
+        res.status(200).json({message: response});
     } catch (err) {
-        res.json({message: err});
+        res.json({error: err});
     }
 });
 
@@ -46,11 +53,11 @@ app.route('/articles')
 
 app.route('/articles/:articleTitle')
 .get((req, res) => {
-    model.DBUtility.findOneArticleByTitle(req.params.articleTitle, (error, foundArticle) => {
-        if (!error) {
-            res.json({message: foundArticle, app: 'wiki-api'});
+    model.DBUtility.findOneArticleByTitle(req.params.articleTitle, (err, foundArticle) => {
+        if (!err) {
+            res.status(200).json({foundArticle});
         } else {
-            res.json({message: error, app: 'wiki-api'});
+            res.json({error: err});
         }
     });
 })
@@ -60,26 +67,26 @@ app.route('/articles/:articleTitle')
     const newArticleContent = req.body.content;
     try {
         const response = await model.DBUtility.replaceArticleInDB(articleTitle, newArticleTitle, newArticleContent);
-        res.json({message: 'Successfully overwritten article', matchedArticle: response.n, modifiedArticle: response.nModified, app: 'wiki-api'});
+        res.status(200).json({message: 'Successfully overwritten article', matchedArticle: response.n, modifiedArticle: response.nModified});
     } catch (err) {
-        res.json({message: err, app: 'wiki-api'});
+        res.json({error: err});
     }
 })
 .patch(async (req, res) => {
     const articleTitle = req.params.articleTitle;
     try {
         const response = await model.DBUtility.updateArticleInDB(articleTitle, req.body);
-        res.json({message: 'Successfully modified article', updatedArticle: response, app: 'wiki-api'});
+        res.status(200).json({message: 'Successfully modified article', updatedArticle: response});
     } catch (err) {
-        res.json({message: err, app: 'wiki-api'});
+        res.json({error: err});
     }
 })
 .delete(async (req, res) => {
     try {
         const response = await model.DBUtility.deleteOneArticleByTitleFromDB(req.params.articleTitle);
-        res.json({message: response, app: 'wiki-api'});
+        res.status(200).json({message: response});
     } catch (err) {
-        res.json({message: err, app: 'wiki-api'});
+        res.json({error: err});
     }  
 });
 
@@ -91,16 +98,16 @@ app.delete('/articles/article/:id', async (req, res) => {
     try {
         
         const response = await model.DBUtility.deleteOneArticleByIdFromDB(articleID);
-        res.json({message: response, app: 'wiki-api'});
+        res.status(200).json({message: response});
     } catch (err) {
-        res.json({message: err, app: 'wiki-api'});
+        res.json({error: err});
     }
 });
 
 app.get("*", (req, res) =>
   res
     .status(404)
-    .json({ message: 'Route does not exist', app: 'wiki-api' })
+    .json({ error: 'Route does not exist'})
 );
 
 const port = 3000;
