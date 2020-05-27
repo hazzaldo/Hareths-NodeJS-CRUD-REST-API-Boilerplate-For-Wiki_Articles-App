@@ -42,6 +42,9 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Parse the 'error:' key for the error message"
                     }
                 }
             },
@@ -80,6 +83,9 @@
                     },
                     "400": {
                         "description": "Failed. Bad post data."
+                    },
+                    "500": {
+                        "description": "Parse the 'error:' key for the error message"
                     }
                 }
             },
@@ -104,6 +110,9 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Parse the 'error:' key for the error message"
                     }
                 }
             }
@@ -149,6 +158,9 @@
                     },
                     "404": {
                         "description": "Failed. Article not found."
+                    },
+                    "500": {
+                        "description": "Parse the 'error:' key for the error message"
                     }
                 }
             },
@@ -201,6 +213,9 @@
                     },
                     "404": {
                         "description": "Failed. Article not found."
+                    },
+                    "500": {
+                        "description": "Parse the 'error:' key for the error message"
                     }
                 }
             },
@@ -257,6 +272,9 @@
                     },
                     "404": {
                         "description": "Failed. Article not found."
+                    },
+                    "500": {
+                        "description": "Parse the 'error:' key for the error message"
                     }
                 }
             },
@@ -295,6 +313,9 @@
                     },
                     "404": {
                         "description": "Failed. Article not found."
+                    },
+                    "500": {
+                        "description": "Parse the 'error:' key for the error message"
                     }
                 }
             }
@@ -346,6 +367,9 @@
                     },
                     "404": {
                         "description": "Failed. Article not found."
+                    },
+                    "500": {
+                        "description": "Parse the 'error:' key for the error message"
                     }
                 }
             }
