@@ -82,6 +82,10 @@ Existing article in MongoDB, to be deleted by ID
 #### DELETE all Articles
 <img src=images/DELETE_articles.JPG>
 
+#### Wiki Articles JSON file
+I have also provide a JSON file with example articles, in the correct format, that you can use (copy and paste) to experiment with the APIs. Please refer to the `wiki-articles-examples.json` file in the root directory of the project.
+
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
